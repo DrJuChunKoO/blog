@@ -116,7 +116,7 @@ export default function Journal({
           <Image src={imgs[2].src} alt={imgs[2].alt} className="aspect-[3/2]" />
         </div>
       )}
-      {imgs.length > 4 && (
+      {imgs.length >= 4 && (
         <div className="w-full overflow-x-auto rounded-lg">
           <div className="flex gap-4">
             {imgs.map(({ src, alt }, i) => (
