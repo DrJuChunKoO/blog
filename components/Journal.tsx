@@ -21,7 +21,7 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
     <>
       <motion.div
         className={twMerge(
-          'group relative w-full cursor-pointer overflow-hidden rounded-lg object-cover',
+          'group relative w-full cursor-pointer rounded-lg object-cover',
           className
         )}
         style={{ zIndex }}
@@ -36,7 +36,11 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
         }}
         layoutId={`image-${src}`}
       >
-        <motion.img src={src} alt={alt} className="h-full w-full object-cover object-center" />
+        <motion.img
+          src={src}
+          alt={alt}
+          className="h-full w-full rounded-lg object-cover object-center"
+        />
         <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
       </motion.div>
 
@@ -65,17 +69,15 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
                 </div>
                 <motion.div
                   onClick={() => setIsOpen(false)}
-                  className="relative z-0 flex min-h-full w-full items-center justify-center p-5"
+                  className="relative z-0 flex h-full w-full items-center justify-center p-5 md:p-10"
                 >
-                  <div className="md:p-10">
-                    <motion.img
-                      src={src}
-                      alt={alt}
-                      className="h-full w-full rounded-lg"
-                      onClick={() => setIsOpen(true)}
-                      layoutId={`image-${src}`}
-                    />
-                  </div>
+                  <motion.img
+                    src={src}
+                    alt={alt}
+                    className="max-h-full max-w-full rounded-lg"
+                    onClick={() => setIsOpen(true)}
+                    layoutId={`image-${src}`}
+                  />
                 </motion.div>
               </RemoveScroll>
             </motion.div>
@@ -99,32 +101,63 @@ export default function Journal({
   }[]
 }) {
   return (
-    <div className="not-prose my-8 border-l-4 border-primary-100 pl-4 dark:border-primary-900">
-      <div className="text-2xl font-bold text-primary-500">{title}</div>
-      <div className="mb-2 text-gray-700 dark:text-gray-300">{children}</div>
-      {imgs.length === 1 && <Image src={imgs[0].src} alt={imgs[0].alt} />}
-      {imgs.length === 2 && (
-        <div className="grid grid-cols-2 gap-2">
-          <Image src={imgs[0].src} alt={imgs[0].alt} className="aspect-[3/2]" />
-          <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
-        </div>
-      )}
-      {imgs.length === 3 && (
-        <div className="grid grid-cols-2 gap-2">
-          <Image src={imgs[0].src} alt={imgs[0].alt} className="col-span-2" />
-          <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
-          <Image src={imgs[2].src} alt={imgs[2].alt} className="aspect-[3/2]" />
-        </div>
-      )}
-      {imgs.length >= 4 && (
-        <div className="w-full overflow-x-auto rounded-lg">
-          <div className="flex gap-4">
-            {imgs.map(({ src, alt }, i) => (
-              <Image key={i} src={src} alt={alt} className="h-48 w-auto shrink-0 md:h-56" />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+    <motion.div className="not-prose my-8 flex gap-4">
+      <motion.div
+        className="w-1 shrink-0 origin-top bg-primary-100 dark:bg-primary-900"
+        initial={{ scaleY: 0 }}
+        whileInView={{ scaleY: 1 }}
+        exit={{ scaleY: 0 }}
+        transition={{
+          duration: 0.5,
+        }}
+        viewport={{ once: true }}
+      />
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        exit={{ y: 20, opacity: 0 }}
+        transition={{
+          duration: 0.5,
+        }}
+        viewport={{ once: true }}
+      >
+        <div className="text-2xl font-bold text-primary-500">{title}</div>
+        <div className="mb-2 text-gray-700 dark:text-gray-300">{children}</div>{' '}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          exit={{ y: 20, opacity: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.25,
+          }}
+          viewport={{ once: true }}
+        >
+          {imgs.length === 1 && <Image src={imgs[0].src} alt={imgs[0].alt} />}
+          {imgs.length === 2 && (
+            <div className="grid grid-cols-2 gap-2">
+              <Image src={imgs[0].src} alt={imgs[0].alt} className="aspect-[3/2]" />
+              <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
+            </div>
+          )}
+          {imgs.length === 3 && (
+            <div className="grid grid-cols-2 gap-2">
+              <Image src={imgs[0].src} alt={imgs[0].alt} className="col-span-2" />
+              <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
+              <Image src={imgs[2].src} alt={imgs[2].alt} className="aspect-[3/2]" />
+            </div>
+          )}
+          {imgs.length >= 4 && (
+            <div className="w-full overflow-x-auto rounded-lg">
+              <div className="flex gap-4">
+                {imgs.map(({ src, alt }, i) => (
+                  <Image key={i} src={src} alt={alt} className="h-48 w-auto shrink-0 md:h-56" />
+                ))}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }
