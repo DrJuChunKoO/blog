@@ -15,6 +15,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      backgroundImage: {
+        noise: "url('/static/images/noise.svg')",
+      },
       lineHeight: {
         11: '2.75rem',
         12: '3rem',
