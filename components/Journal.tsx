@@ -36,11 +36,7 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
         }}
         layoutId={`image-${src}`}
       >
-        <motion.img
-          src={src}
-          alt={alt}
-          className="h-full w-full rounded-lg object-cover object-center"
-        />
+        <motion.img src={src} alt={alt} className="h-full rounded-lg object-cover object-center" />
         <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
       </motion.div>
 
