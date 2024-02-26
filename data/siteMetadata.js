@@ -1,25 +1,25 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
-  language: 'en-us',
+  title: '科技立委葛如鈞．寶博士',
+  author: '科技立委葛如鈞．寶博士',
+  headerTitle: '科技立委葛如鈞．寶博士',
+  description:
+    '歡迎來到科技立委葛如鈞的部落格，這裡會分享一些科技、政策、社會、環境等議題，也會分享一些生活點滴。',
+  language: 'zh-TW',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://blog.juchunko.com/',
+  siteRepo: 'https://github.com/DrJuChunKoO/blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
-  threads: 'https://www.threads.net',
-  instagram: 'https://www.instagram.com',
-  locale: 'en-US',
+  email: 'dr.juchunko@gmail.com',
+  github: 'https://github.com/DrJuChunKoO/blog',
+  twitter: 'https://x.com/@dAAAb',
+  facebook: 'https://fb.com/dr.juchunko/',
+  youtube: 'https://youtube.com/@dr.juchunko',
+  threads: 'https://threads.net/@dr.juchunko',
+  instagram: 'https://instagr.am/dr.juchunko/',
+  locale: 'zh-TW',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
