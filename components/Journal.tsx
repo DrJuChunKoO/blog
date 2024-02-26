@@ -4,7 +4,17 @@ import { motion, AnimatePresence, useMotionValue } from 'framer-motion'
 import { twMerge } from 'tailwind-merge'
 import { X } from 'lucide-react'
 import { RemoveScroll } from 'react-remove-scroll'
-function Image({ src, alt, className = '' }: { src: string; alt?: string; className?: string }) {
+function Image({
+  src,
+  alt,
+  className = '',
+  imageClassName = '',
+}: {
+  src: string
+  alt?: string
+  className?: string
+  imageClassName?: string
+}) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const zIndex = useMotionValue(0)
   const variants = {
@@ -36,7 +46,11 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
         }}
         layoutId={`image-${src}`}
       >
-        <motion.img src={src} alt={alt} className="h-full rounded-lg object-cover object-center" />
+        <motion.img
+          src={src}
+          alt={alt}
+          className={twMerge('rounded-lg object-cover object-center', imageClassName)}
+        />
         <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
       </motion.div>
 
@@ -129,25 +143,58 @@ export default function Journal({
           }}
           viewport={{ once: true }}
         >
-          {imgs.length === 1 && <Image src={imgs[0].src} alt={imgs[0].alt} />}
+          {imgs.length === 1 && (
+            <Image src={imgs[0].src} alt={imgs[0].alt} imageClassName="w-full" />
+          )}
           {imgs.length === 2 && (
             <div className="grid grid-cols-2 gap-2">
-              <Image src={imgs[0].src} alt={imgs[0].alt} className="aspect-[3/2]" />
-              <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
+              <Image
+                src={imgs[0].src}
+                alt={imgs[0].alt}
+                className="aspect-[3/2]"
+                imageClassName="w-full"
+              />
+              <Image
+                src={imgs[1].src}
+                alt={imgs[1].alt}
+                className="aspect-[3/2]"
+                imageClassName="w-full"
+              />
             </div>
           )}
           {imgs.length === 3 && (
             <div className="grid grid-cols-2 gap-2">
-              <Image src={imgs[0].src} alt={imgs[0].alt} className="col-span-2" />
-              <Image src={imgs[1].src} alt={imgs[1].alt} className="aspect-[3/2]" />
-              <Image src={imgs[2].src} alt={imgs[2].alt} className="aspect-[3/2]" />
+              <Image
+                src={imgs[0].src}
+                alt={imgs[0].alt}
+                className="col-span-2"
+                imageClassName="w-full"
+              />
+              <Image
+                src={imgs[1].src}
+                alt={imgs[1].alt}
+                className="aspect-[3/2]"
+                imageClassName="w-full"
+              />
+              <Image
+                src={imgs[2].src}
+                alt={imgs[2].alt}
+                className="aspect-[3/2]"
+                imageClassName="w-full"
+              />
             </div>
           )}
           {imgs.length >= 4 && (
             <div className="w-full overflow-x-auto rounded-lg">
               <div className="flex gap-4">
                 {imgs.map(({ src, alt }, i) => (
-                  <Image key={i} src={src} alt={alt} className="h-48 w-auto shrink-0 md:h-56" />
+                  <Image
+                    key={i}
+                    src={src}
+                    alt={alt}
+                    className="h-48 shrink-0 md:h-56 w-auto"
+                    imageClassName="h-full"
+                  />
                 ))}
               </div>
             </div>
