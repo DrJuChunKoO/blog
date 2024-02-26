@@ -52,7 +52,7 @@ function Image({ src, alt, className = '' }: { src: string; alt?: string; classN
               <motion.div
                 variants={variants}
                 className="bg-noise absolute inset-0 bg-white/80 text-black backdrop-blur dark:bg-black/50 dark:text-white"
-              ></motion.div>
+              />
               <RemoveScroll className="fixed inset-0 z-50 overflow-auto">
                 <div className="sticky top-0 z-10 flex h-0">
                   <motion.button
