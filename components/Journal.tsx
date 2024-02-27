@@ -148,18 +148,8 @@ export default function Journal({
           )}
           {imgs.length === 2 && (
             <div className="grid grid-cols-2 gap-2">
-              <Image
-                src={imgs[0].src}
-                alt={imgs[0].alt}
-                className="aspect-[3/2]"
-                imageClassName="w-full"
-              />
-              <Image
-                src={imgs[1].src}
-                alt={imgs[1].alt}
-                className="aspect-[3/2]"
-                imageClassName="w-full"
-              />
+              <Image src={imgs[0].src} alt={imgs[0].alt} imageClassName="w-full aspect-[3/2]" />
+              <Image src={imgs[1].src} alt={imgs[1].alt} imageClassName="w-full aspect-[3/2]" />
             </div>
           )}
           {imgs.length === 3 && (
@@ -170,18 +160,8 @@ export default function Journal({
                 className="col-span-2"
                 imageClassName="w-full"
               />
-              <Image
-                src={imgs[1].src}
-                alt={imgs[1].alt}
-                className="aspect-[3/2]"
-                imageClassName="w-full"
-              />
-              <Image
-                src={imgs[2].src}
-                alt={imgs[2].alt}
-                className="aspect-[3/2]"
-                imageClassName="w-full"
-              />
+              <Image src={imgs[1].src} alt={imgs[1].alt} imageClassName="w-full aspect-square" />
+              <Image src={imgs[2].src} alt={imgs[2].alt} imageClassName="w-full aspect-square" />
             </div>
           )}
           {imgs.length >= 4 && (
