@@ -9,9 +9,9 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.juchunko.com/',
   siteRepo: 'https://github.com/DrJuChunKoO/blog',
-  siteLogo: '/static/images/logo.png',
-  socialBanner: '/static/images/twitter-card.png',
-  mastodon: 'https://mastodon.social/@mastodonuser',
+  siteLogo: '/static/favicons/favicon.png',
+  socialBanner: '/static/images/ogimage.png',
+  // mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'dr.juchunko@gmail.com',
   github: 'https://github.com/DrJuChunKoO/blog',
   twitter: 'https://x.com/@dAAAb',
