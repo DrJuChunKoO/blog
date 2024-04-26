@@ -4,6 +4,6 @@ import Main from './Main'
 
 export default async function Page() {
   const sortedPosts = sortPosts(allBlogs)
-  const posts = allCoreContent(sortedPosts)
+  const posts = allCoreContent(sortedPosts).filter((post) => !post.tags.includes('建佑律師說法'))
   return <Main posts={posts} />
 }
