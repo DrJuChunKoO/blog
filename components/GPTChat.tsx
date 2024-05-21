@@ -12,13 +12,22 @@ import {
   Send,
   Copy,
   Check,
+  ArrowRight,
 } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 import { useCompletion } from 'ai/react'
 import { useLocalStorage } from 'usehooks-ts'
 import Markdown from 'react-markdown'
 import { usePathname } from 'next/navigation'
-function Message({ from, content }: { from: 'me' | 'ai'; content: string }) {
+function Message({
+  from,
+  content,
+  showCopy = true,
+}: {
+  from: 'me' | 'ai'
+  content: string
+  showCopy?: boolean
+}) {
   const [copied, setCopied] = useState(false)
   async function copyToClipboard(text: string) {
     if ('clipboard' in navigator) {
@@ -31,7 +40,7 @@ function Message({ from, content }: { from: 'me' | 'ai'; content: string }) {
     <motion.div
       initial={{ opacity: 0, x: from === 'me' ? 50 : -50 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: from === 'me' ? 50 : -50, height: 0 }}
+      exit={{ opacity: 0, x: from === 'me' ? 50 : -50 }}
     >
       <div
         className={twMerge(
@@ -39,27 +48,15 @@ function Message({ from, content }: { from: 'me' | 'ai'; content: string }) {
           from === 'me' ? 'flex-row-reverse' : ''
         )}
       >
-        {from === 'me' && (
-          <div
-            className={twMerge(
-              'rounded-full p-2',
-              from === 'me'
-                ? 'bg-gray-100 text-gray-500 shadow-inner' // from user
-                : 'bg-gray-50 text-gray-500 dark:bg-white/10 dark:text-white/90' // from bot
-            )}
-          >
-            {from === 'me' ? <User /> : <Bot />}
-          </div>
-        )}
         <div
           className={twMerge(
-            'rounded-lg',
+            'group relative rounded-xl',
             from === 'me'
-              ? 'bg-gray-200 text-gray-800' // from user
-              : 'bg-gray-50 text-gray-800 dark:bg-white/10 dark:text-white/90' // from bot
+              ? 'rounded-br-sm border border-gray-200 text-gray-800 dark:border-gray-600' // from user
+              : 'rounded-bl-sm bg-gray-50 text-gray-800 dark:bg-white/10 dark:text-white/90' // from bot
           )}
         >
-          {from === 'ai' && (
+          {from === 'ai' && showCopy && (
             <div className="flex items-center justify-between rounded-t-lg bg-gray-100 px-3 py-2 text-sm font-bold dark:bg-gray-600">
               <div className="flex items-center gap-2">
                 <Bot size={16} />
@@ -73,12 +70,7 @@ function Message({ from, content }: { from: 'me' | 'ai'; content: string }) {
               </button>
             </div>
           )}
-          <Markdown
-            className={twMerge(
-              'prose prose-sm break-all px-3 py-2 text-sm',
-              from === 'me' ? '' : 'dark:prose-invert'
-            )}
-          >
+          <Markdown className="prose prose-sm break-all px-3 py-2 text-sm dark:prose-invert">
             {content}
           </Markdown>
         </div>
@@ -133,7 +125,7 @@ export default function GPTChat() {
   }, [messages, show, isLoading])
   return show ? (
     <motion.div
-      className="fixed bottom-4 right-4 w-[min(400px,calc(100vw-16px*2))] rounded-lg bg-gray-200 shadow-lg dark:bg-gray-700 dark:shadow-xl"
+      className="fixed bottom-4 right-4 w-[min(400px,calc(100vw-16px*2))] rounded-lg bg-gray-100 shadow-lg dark:bg-gray-700 dark:shadow-xl"
       key={1}
       layoutId="chat"
     >
@@ -146,13 +138,13 @@ export default function GPTChat() {
         </div>
         <div className="flex">
           <button
-            className="rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
+            className="rounded-full p-2 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
             onClick={() => setMessages([])}
           >
             <RotateCcw size={20} />
           </button>
           <button
-            className="rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
+            className="rounded-full p-2 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
             onClick={() => setShow(false)}
           >
             <Minus size={20} />
@@ -163,7 +155,11 @@ export default function GPTChat() {
         className="h-[400px] overflow-y-scroll bg-white p-2 dark:bg-gray-800"
         ref={messageContainerRef}
       >
-        <Message from="ai" content="你好，我是 AI 小助手，有什麼可以幫助你的嗎？" />
+        <Message
+          from="ai"
+          content="你好，我是 AI 小助手，有什麼可以幫助你的嗎？"
+          showCopy={false}
+        />
         <AnimatePresence>
           {messages.map((m, index) => (
             <Message from={m.role === 'user' ? 'me' : 'ai'} content={m.content} key={index} />
@@ -180,19 +176,19 @@ export default function GPTChat() {
               {[
                 `整理這頁的重點`,
                 `提供相關的背景資訊`,
-                `這頁的主要觀點是什麼？`,
-                '可以給我這個主題的詳細解釋嗎？',
+                `這頁的主要觀點是什麼`,
+                '可以給我這個主題的詳細解釋嗎',
                 '幫我生成一個這段內容的問答',
               ]
                 .filter((x) => !messages.some((m) => m.content === x))
                 .map((message, index) => (
                   <button
                     onClick={() => sendDefaultMessage(message)}
-                    className="flex items-center gap-2 pl-3 text-left text-sm hover:opacity-75 active:opacity-50"
+                    className="flex items-center gap-0.5 pl-3 text-left text-sm opacity-75 transition-all hover:gap-1 hover:opacity-100 active:opacity-50"
                     key={index}
                   >
-                    <MessageCircleQuestion size={20} />
                     {message}
+                    <ArrowRight size={16} strokeWidth={1.5} />
                   </button>
                 ))}
             </motion.div>
@@ -208,7 +204,7 @@ export default function GPTChat() {
         />
         <button
           type="submit"
-          className="mr-1 rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
+          className="mr-1 rounded-full p-2 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
           ref={submitButtonRef}
         >
           <Send size={20} />
