@@ -19,7 +19,7 @@ const ScrollTopAndComment = () => {
     window.scrollTo({ top: 0 })
   }
   return (
-    <div className="fixed bottom-8 right-8 flex flex-col gap-3">
+    <div className="fixed bottom-8 right-8 z-10 flex flex-col gap-3">
       <AnimatePresence>
         {show && (
           <motion.button
