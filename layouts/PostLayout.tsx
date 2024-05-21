@@ -68,7 +68,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           width={38}
                           height={38}
                           alt="avatar"
-                          className="h-10 w-10 rounded-full"
+                          className="h-10 w-10 rounded-full object-cover"
                         />
                       )}
                       <dl className="whitespace-nowrap text-sm font-medium leading-5">
