@@ -133,11 +133,11 @@ export default function GPTChat() {
   }, [messages, show, isLoading])
   return show ? (
     <motion.div
-      className="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-[min(400px,calc(100vw-16px*2))] shadow-lg dark:shadow-xl"
+      className="fixed bottom-4 right-4 w-[min(400px,calc(100vw-16px*2))] rounded-lg bg-gray-200 shadow-lg dark:bg-gray-700 dark:shadow-xl"
       key={1}
       layoutId="chat"
     >
-      <motion.div className="p-1 flex justify-between items-center gap-4">
+      <motion.div className="flex items-center justify-between gap-4 p-1">
         <div className="flex items-center font-semibold">
           <motion.span className="p-2">
             <BotMessageSquare size={20} />
@@ -146,13 +146,13 @@ export default function GPTChat() {
         </div>
         <div className="flex">
           <button
-            className="text-gray-500 p-2 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full"
+            className="rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
             onClick={() => setMessages([])}
           >
             <RotateCcw size={20} />
           </button>
           <button
-            className="text-gray-500 p-2 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full"
+            className="rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
             onClick={() => setShow(false)}
           >
             <Minus size={20} />
@@ -160,7 +160,7 @@ export default function GPTChat() {
         </div>
       </motion.div>
       <div
-        className="bg-white dark:bg-gray-800 p-2 h-[400px] overflow-y-scroll"
+        className="h-[400px] overflow-y-scroll bg-white p-2 dark:bg-gray-800"
         ref={messageContainerRef}
       >
         <Message from="ai" content="你好，我是 AI 小助手，有什麼可以幫助你的嗎？" />
@@ -188,7 +188,7 @@ export default function GPTChat() {
                 .map((message, index) => (
                   <button
                     onClick={() => sendDefaultMessage(message)}
-                    className="flex items-center gap-2 text-left text-sm hover:opacity-75 active:opacity-50 pl-3"
+                    className="flex items-center gap-2 pl-3 text-left text-sm hover:opacity-75 active:opacity-50"
                     key={index}
                   >
                     <MessageCircleQuestion size={20} />
@@ -199,16 +199,16 @@ export default function GPTChat() {
           )}
         </AnimatePresence>
       </div>
-      <form className="flex justify-between items-center gap-4" onSubmit={onSubmit}>
+      <form className="flex items-center justify-between gap-4" onSubmit={onSubmit}>
         <input
-          className="flex-1 bg-transparent w-full ring-0 border-transparent focus:border-transparent focus:ring-transparent p-2"
+          className="w-full flex-1 border-transparent bg-transparent p-2 ring-0 focus:border-transparent focus:ring-transparent"
           value={input}
           onChange={handleInputChange}
           required
         />
         <button
           type="submit"
-          className="text-gray-500 p-2 mr-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full"
+          className="mr-1 rounded-full p-2 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
           ref={submitButtonRef}
         >
           <Send size={20} />

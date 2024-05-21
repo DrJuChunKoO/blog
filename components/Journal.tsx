@@ -65,7 +65,7 @@ function Image({
             >
               <motion.div
                 variants={variants}
-                className="bg-noise absolute inset-0 bg-white/80 text-black backdrop-blur dark:bg-black/50 dark:text-white"
+                className="absolute inset-0 bg-white/80 bg-noise text-black backdrop-blur dark:bg-black/50 dark:text-white"
               />
               <RemoveScroll className="fixed inset-0 z-50 overflow-auto">
                 <div className="sticky top-0 z-10 flex h-0">
@@ -172,7 +172,7 @@ export default function Journal({
                     key={i}
                     src={src}
                     alt={alt}
-                    className="h-48 shrink-0 md:h-56 w-auto"
+                    className="h-48 w-auto shrink-0 md:h-56"
                     imageClassName="h-full"
                   />
                 ))}

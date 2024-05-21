@@ -19,13 +19,13 @@ const ScrollTopAndComment = () => {
     window.scrollTo({ top: 0 })
   }
   return (
-    <div className="fixed bottom-8 right-8 flex-col gap-3 flex">
+    <div className="fixed bottom-8 right-8 flex flex-col gap-3">
       <AnimatePresence>
         {show && (
           <motion.button
             aria-label="Scroll To Top"
             onClick={handleScrollTop}
-            className="rounded-full bg-gray-200 p-2 text-gray-500 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 hidden md:block"
+            className="hidden rounded-full bg-gray-200 p-2 text-gray-500 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 md:block"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
