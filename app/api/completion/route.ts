@@ -43,7 +43,8 @@ export async function POST(req: Request) {
   const stream = OpenAIStream(response)
   const reStream = new ReadableStream({
     async start(controller) {
-      for await (const chunk of stream as any) {
+      // @ts-ignore
+      for await (const chunk of stream) {
         controller.enqueue(chunk)
         // on end
         await new Promise((r) =>
