@@ -15,8 +15,12 @@ export async function POST(req: Request) {
   6. 目前你只能看到目前頁面的內容，若目前沒有你需要的資訊，請告知使用者請切換到相對應的頁面。`
 
   const { messages, filename, prompt } = await req.json()
+  const date = new Date().toLocaleDateString()
   const fileData = await fetch(
-    `https://raw.githubusercontent.com/DrJuChunKoO/blog/main/data${filename}.mdx`
+    `https://raw.githubusercontent.com/DrJuChunKoO/blog/main/data${filename}.mdx?d=${encodeURIComponent(date)}`,
+    {
+      cache: 'force-cache',
+    }
   ).then((res) => res.text())
   const response = await openai.chat.completions.create({
     model: 'gpt-4o',
