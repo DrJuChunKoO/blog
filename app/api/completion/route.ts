@@ -1,10 +1,9 @@
-import { createOpenAI } from '@ai-sdk/openai'
-import { StreamingTextResponse, streamText } from 'ai'
-import { env } from 'process'
+import OpenAI from 'openai'
+import { StreamingTextResponse, OpenAIStream } from 'ai'
 export const dynamic = 'force-dynamic'
-const openai = createOpenAI({
-  apiKey: env.OPENAI_API_KEY,
-  baseURL: 'https://gateway.ai.cloudflare.com/v1/3f1f83a939b2fc99ca45fd8987962514/open-ai/openai',
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: 'https://gateway.ai.cloudflare.com/v1/3f1f83a939b2fc99ca45fd8987962514/blog/openai',
 })
 export async function POST(req: Request) {
   const systemPrompt = `你是國民黨立委葛如鈞（寶博士）部落格的 AI 助手
@@ -17,13 +16,13 @@ export async function POST(req: Request) {
 
   const { messages, filename, prompt } = await req.json()
   const fileData = await fetch(
-    `https://raw.githubusercontent.com/DrJuChunKoO/blog/main/data${filename}.mdx`,
-    {
-      cache: 'force-cache',
-    }
+    `https://raw.githubusercontent.com/DrJuChunKoO/blog/main/data${filename}.mdx`
   ).then((res) => res.text())
-  const response = await streamText({
-    model: openai('gpt-4o'),
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    stream: true,
+    temperature: 0.6,
+    max_tokens: 4096,
     messages: [
       { role: 'system', content: systemPrompt },
       {
@@ -36,7 +35,25 @@ export async function POST(req: Request) {
         content: prompt,
       },
     ],
+  }) // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response)
+  const reStream = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream as any) {
+        controller.enqueue(chunk)
+        // on end
+        await new Promise((r) =>
+          setTimeout(
+            r,
+            // get a random number between 5ms and 25ms to simulate a random delay
+            Math.floor(Math.random() * 20) + 5
+          )
+        )
+      }
+      controller.close()
+    },
   })
+
   // Convert the response into a friendly text-stream
-  return new StreamingTextResponse(response.toAIStream())
+  return new StreamingTextResponse(reStream)
 }
