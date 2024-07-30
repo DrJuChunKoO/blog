@@ -101,7 +101,7 @@ function Image({
 export default function Journal({
   title,
   children,
-  imgs,
+  imgs = [],
 }: {
   title: string
   children: React.ReactNode
